@@ -1,0 +1,10 @@
+/home/alla/University/7/Framework .NET/lab1/obj/Debug/netcoreapp2.0/lab1.csproj.CoreCompileInputs.cache
+/home/alla/University/7/Framework .NET/lab1/obj/Debug/netcoreapp2.0/lab1.AssemblyInfoInputs.cache
+/home/alla/University/7/Framework .NET/lab1/obj/Debug/netcoreapp2.0/lab1.AssemblyInfo.cs
+/home/alla/University/7/Framework .NET/lab1/bin/Debug/netcoreapp2.0/lab1.deps.json
+/home/alla/University/7/Framework .NET/lab1/bin/Debug/netcoreapp2.0/lab1.runtimeconfig.json
+/home/alla/University/7/Framework .NET/lab1/bin/Debug/netcoreapp2.0/lab1.runtimeconfig.dev.json
+/home/alla/University/7/Framework .NET/lab1/bin/Debug/netcoreapp2.0/lab1.dll
+/home/alla/University/7/Framework .NET/lab1/bin/Debug/netcoreapp2.0/lab1.pdb
+/home/alla/University/7/Framework .NET/lab1/obj/Debug/netcoreapp2.0/lab1.dll
+/home/alla/University/7/Framework .NET/lab1/obj/Debug/netcoreapp2.0/lab1.pdb
