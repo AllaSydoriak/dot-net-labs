@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace lab1{
     public class Student{
@@ -7,98 +8,106 @@ namespace lab1{
         private int _group;
         private Exam[] _exams;
 
-        public Student (Person Information, Education EducationForm, int Group, Exam[] Exams){
-            _information = Information;
-            _educationForm = EducationForm;
-            _group = Group;
-            _exams = Exams;
+        public Student (Person information, Education educationForm, int group, Exam[] exams)
+        {
+            Information = information;
+            EducationForm = educationForm;
+            Group = group;
+            Exams = exams;
         }
 
-        public Student (){
-            _information = new Person ();
-            _educationForm = new Education ();
-            _group = 1;
-            Exam[] exams = new Exam[4];
-            for (int i=0; i<4; i++)
-            {
-                exams[i] = new Exam();
-            }
-            _exams = exams;            
+        public Student ()
+        {
+            Information = new Person ();
+            EducationForm = new Education ();
+            Group = 1;
+            Exam[] exams = { new Exam(), };
+            // Exam[] exams = new Exam[4];
+            // for (int i=0; i<4; i++)
+            // {
+            //     exams[i] = new Exam();
+            // }
+            Exams = exams;            
         }
-        public Person Information{
+        public Person Information
+        {
             get => _information;
-            set{
-                _information = value;
-            }
+            set{ _information = value; }
         }
-        public Education EducationForm{
+        public Education EducationForm
+        {
             get => _educationForm;
-            set{
-                _educationForm = value;
-            }
+            set{ _educationForm = value; }
         }
         public int Group{
             get => _group;
-            set{
-                _group = value;
-            }
+            set{  _group = value; }
         }
         public Exam[] Exams{
             get => _exams;
-            set{
-                _exams = value;
-            }
+            set{ _exams = value; }
         }
         
-        public double Avarage {
-            get {
+        public double Avarage 
+        {
+            get 
+            {
                 double avg = 0;
+                if (Exams == null || Exams.Length == 0) return 0;
                 foreach (Exam item in Exams) {
-                    avg += (1.0 / Exams.Length) * item.Mark;                
+                    avg += item.Mark;                
                 }
-                return avg;
+                return avg / Exams.Length;
             }            
         }
 
-        public bool this[Education e]{
-            get{
+        public bool this[Education e]
+        {
+            get
+            {
                 return EducationForm == e;
             }
         }
 
-        public void AddExams(params Exam[] NewExams){
-            Exam[] NewList = new Exam[NewExams.Length + Exams.Length];
+        public void AddExams(params Exam[] newExams)
+        {
+            if (newExams == null || newExams.Length == 0) return;
+            Exam[] newList = new Exam[newExams.Length + (Exams == null ? 0: Exams.Length)];
 
             int i = 0;
+            if (Exams != null)
+            {
             foreach(Exam item in Exams)
             {
-                NewList[i] = item;
+                newList[i] = item;
                 i++;
             }
-           foreach(Exam item in NewExams)
+            }
+           foreach(Exam item in newExams)
             {
-                NewList[i] = item;
+                newList[i] = item;
                 i++;
             }
-            Exams = NewList;
+            Exams = newList;
         }
 
         public override string ToString(){
-            string result = "Surname: " + _information.Surname + ", " +
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Surname: " + Information.Surname + ", " +
                             "Name: " + _information.Name + ", " +
                             "Birth date: " + _information.Birthday.ToShortDateString() + ", " +
                             "Education form: " + EducationForm + ", " +
                             "Group: " + Group + ", " +
-                            "Exams: ";
+                            "Exams: ");
                 foreach (Exam item in Exams)
                 {
-                    result = result + item.ToString() + ", ";        
+                    sb.Append(item.ToString() + " ");        
                 }
-            return result;
+            return sb.ToString();
         }
 
         public virtual string ToShortString(){
-            return "Surname: " + _information.Surname + ", " +
+            return "Surname: " + Information.Surname + ", " +
                     "Name: " + _information.Name + ", " +
                     "Birth date: " + _information.Birthday + ", " +
                     "Education form: " + EducationForm + ", " +

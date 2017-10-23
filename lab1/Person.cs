@@ -5,49 +5,52 @@ namespace lab1{
             private string _name;
             private string _surname;
             private DateTime _birthday;
-            public Person(string firstName, string lastName, DateTime birth){
-                _name = firstName;
-                _surname = lastName;
-                _birthday = birth;
+            public Person(string firstName, string lastName, DateTime birth)
+            {
+                Name = firstName;
+                Surname = lastName;
+                Birthday = birth;
             }
-            public Person(){
-                _name = "Ivan";
-                _surname = "Ivanov";
-                _birthday = default(DateTime);
+            public Person()
+            {
+                Name = "Ivan";
+                Surname = "Ivanov";
+                Birthday = default(DateTime);
             }
-            public string Name{
+            public string Name
+            {
                 get => _name;
                 set{
                     _name = value;
                 }
             }
-            public string Surname{
+
+            public string Surname
+            {
                 get => _surname;
-                set{
-                    _surname = value;
-                }
+                set{ _surname = value; }
             }
-            public DateTime Birthday{
+            public DateTime Birthday
+            {
                 get => _birthday;
-                set{
-                    _birthday = value;
-                }
+                set{ _birthday = value; }
             }
-            public int birthYear{
+            public int birthYear
+            {
                 get => _birthday.Year;
 
-                 set{
-                     _birthday = new DateTime(value, _birthday.Month,_birthday.Day);
-                 }
+                 set{ _birthday = new DateTime(value, _birthday.Month,_birthday.Day); }
                 
             }
 
-            public override string ToString(){
-                return _surname + " " + _name + " " + _birthday;
+            public override string ToString()
+            {
+                return Surname + " " + Name + " " + Birthday;
             }
 
-            public virtual string ToShortString(){
-                return _surname + " " + _name;
+            public virtual string ToShortString()
+            {
+                return Surname + " " + Name;
             }
 
         }

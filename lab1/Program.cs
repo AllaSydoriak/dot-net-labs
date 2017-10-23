@@ -21,6 +21,7 @@ namespace lab1
             }
             return rows;
         }
+
         static void Main(string[] args)
         {
             Student ob = new Student();
@@ -48,6 +49,8 @@ namespace lab1
             ob.AddExams(NewExams);
 
             Console.WriteLine(ob.ToString());
+            Console.WriteLine(ob.ToShortString());
+            
 
             // Console.WriteLine("Input the number of rows and columns. Separate them with one of the separators: ' ', ',', '.' ");
             // string userLine = Console.ReadLine();
@@ -60,16 +63,20 @@ namespace lab1
             // Console.WriteLine(mColumns);
 
             // int mult = nRows*mColumns;
+
             // /***** 1DimArray ******/
             // Person[] array1Dim = new Person[mult];
-            // for (int i = 0; i < mult; i++){
+            // for (int i = 0; i < mult; i++)
+            // {
             //     array1Dim[i] = new Person();
             // }
 
             // /***** 2DimArray ******/
             // Person[,] array2Dim = new Person[nRows, mColumns];
-            // for (int i = 0; i < nRows; i++) {
-            //     for (int j = 0; j < mColumns; j++) {
+            // for (int i = 0; i < array2Dim.Length; i++) 
+            // {
+            //     for (int j = 0; j < array2Dim[i].Length; j++) 
+            //     {
             //         array2Dim[i,j] = new Person();
             //     }
             // }
@@ -96,8 +103,8 @@ namespace lab1
             // arrayJagged[jaggedRows - 1] = new Person[endRow];
             
             // counter = 1;
-            //     for (int i = 0; i < jaggedRows; i++){
-            //         for (int j = 0; j < counter; j++){
+            //     for (int i = 0; i < arrayJagged.Length; i++){
+            //         for (int j = 0; j < arrayJagged[i].Length; j++){
             //             if (i == (jaggedRows - 1)) {
             //                 for (int k = 0; k < endRow; k++) {
             //                     arrayJagged[i][k] = new Person();
