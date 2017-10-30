@@ -1,0 +1,109 @@
+            // Console.WriteLine("Input the number of rows and columns. Separate them with one of the separators: ' ', ',', '.' ");
+            // string userLine = Console.ReadLine();
+            // string[] result = userLine.Split(new Char [] {' ', ',', '.' });
+            
+            // int nRows = Int32.Parse(result[0]);
+            // int mColumns = Int32.Parse(result[1]);
+
+            // Console.WriteLine(nRows);
+            // Console.WriteLine(mColumns);
+
+            // int mult = nRows*mColumns;
+
+            // /***** 1DimArray ******/
+            // Person[] array1Dim = new Person[mult];
+            // for (int i = 0; i < mult; i++)
+            // {
+            //     array1Dim[i] = new Person();
+            // }
+
+            // /***** 2DimArray ******/
+            // Person[,] array2Dim = new Person[nRows, mColumns];
+            // for (int i = 0; i < array2Dim.Length; i++) 
+            // {
+            //     for (int j = 0; j < array2Dim[i].Length; j++) 
+            //     {
+            //         array2Dim[i,j] = new Person();
+            //     }
+            // }
+            // /***** arraySimpleJugged ******/
+            // Person[][] arraySimpleJagged = new Person[nRows][];
+            // for(int i = 0; i < nRows; i++){
+            //     arraySimpleJagged[i] = new Person[mColumns];
+            // }
+            // for(int i = 0; i < nRows; i++){
+            //     for(int j = 0; j < mColumns; j++){
+            //         arraySimpleJagged[i][j] = new Person();
+            //     }
+            // }
+            // /***** arrayJugged ******/
+            // int jaggedRows = сountRows(mult);
+            // int endRow = mult - ((jaggedRows - 1) * jaggedRows) / 2;  
+            
+            // int counter = 1;
+            // Person[][] arrayJagged = new Person[jaggedRows][];
+            // for (int i = 0; i < jaggedRows - 1; i++) {
+            //     arrayJagged[i] = new Person[counter];
+            //     counter++;
+            // }
+            // arrayJagged[jaggedRows - 1] = new Person[endRow];
+            
+            // counter = 1;
+            //     for (int i = 0; i < arrayJagged.Length; i++){
+            //         for (int j = 0; j < arrayJagged[i].Length; j++){
+            //             if (i == (jaggedRows - 1)) {
+            //                 for (int k = 0; k < endRow; k++) {
+            //                     arrayJagged[i][k] = new Person();
+            //                 }
+            //                 break;
+            //             }
+            //             else {
+            //                 arrayJagged[i][j] = new Person();
+            //             }
+            //         }
+            //         counter++;
+            //     }
+
+            // long start1 = Environment.TickCount;
+            // for (int i = 0; i < mult; i++)
+            // {
+            //     array1Dim[i].Name = "Alla";
+            //     // Console.WriteLine(array1Dim[i].Name);
+            // }
+            // long end1 = Environment.TickCount;
+            // Console.WriteLine("Time for 1Dim array:" + (end1 - start1));
+
+            // long start2 = Environment.TickCount;
+            // for (int i = 0; i < nRows; i++) {
+            //     for (int j = 0; j < mColumns; j++) {
+            //         array2Dim[i,j].Name = "Alla";
+            //         //  Console.WriteLine(array2Dim[i,j].Name);
+                    
+            //     }
+            // }
+            // long end2 = Environment.TickCount;            
+            // Console.WriteLine("Time for 2Dim array:" + (end2 - start2));
+            
+            // long start3 = Environment.TickCount;
+            // for (int i = 0; i < nRows; i++) {
+            //     for (int j = 0; j < mColumns; j++) {
+            //         arraySimpleJagged[i][j].Name = "Alla";
+            //         // Console.WriteLine(arraySimpleJugged[i][j].Name);
+                    
+            //     }
+            // }
+            // long end3 = Environment.TickCount;            
+            // Console.WriteLine("Time for JuggedSimple array:" + (end3 - start3));
+
+            // long start4 = Environment.TickCount;
+            // for (int i = 0; i < jaggedRows - 1; i++){
+            //     for (int j = 0; j < arrayJagged[i].Length; j++){
+            //         arrayJagged[i][j].Name = "Alla";
+            //     }
+
+            // }
+            // for (int i = 0; i < endRow; i++){
+            //     arrayJagged[jaggedRows - 1][i].Name = "Alla";
+            // }
+            // long end4 = Environment.TickCount;            
+            // Console.WriteLine("Time for JuggedSimple array:" + (end4 - start4));

@@ -21,12 +21,12 @@ namespace lab1{
             Information = new Person ();
             EducationForm = new Education ();
             Group = 1;
-            Exam[] exams = { new Exam(), };
-            // Exam[] exams = new Exam[4];
-            // for (int i=0; i<4; i++)
-            // {
-            //     exams[i] = new Exam();
-            // }
+            // Exam[] exams = { new Exam(), };
+            Exam[] exams = new Exam[4];
+            for (int i=0; i<4; i++)
+            {
+                exams[i] = new Exam();
+            }
             Exams = exams;            
         }
         public Person Information
@@ -91,11 +91,12 @@ namespace lab1{
             Exams = newList;
         }
 
-        public override string ToString(){
+        public override string ToString()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("Surname: " + Information.Surname + ", " +
-                            "Name: " + _information.Name + ", " +
-                            "Birth date: " + _information.Birthday.ToShortDateString() + ", " +
+                            "Name: " + Information.Name + ", " +
+                            "Birth date: " + Information.Birthday.ToShortDateString() + ", " +
                             "Education form: " + EducationForm + ", " +
                             "Group: " + Group + ", " +
                             "Exams: ");
@@ -106,14 +107,82 @@ namespace lab1{
             return sb.ToString();
         }
 
-        public virtual string ToShortString(){
+        public virtual string ToShortString()
+        {
             return "Surname: " + Information.Surname + ", " +
-                    "Name: " + _information.Name + ", " +
-                    "Birth date: " + _information.Birthday + ", " +
+                    "Name: " + Information.Name + ", " +
+                    "Birth date: " + Information.Birthday + ", " +
                     "Education form: " + EducationForm + ", " +
                     "Group: " + Group + ", " +
                     "Avarage mark: " + Avarage;
         }
+
+        public bool ExamsEquals(Exam[] arr1, Exam[] arr2)
+        {
+            if (arr1.Length != arr2.Length) return false;
+            for(int i = 0; i < arr1.Length; i++)
+            {
+                if (arr1[i] != arr2[i]) return false;
+            }
+            return true;
+        }
+
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Student studObj = obj as Student;
+                
+            if((object)studObj == null)
+            {
+                return false;
+            }
+
+            else return( (Information.Name == studObj.Information.Name)
+                    && (Information.Surname == studObj.Information.Surname)
+                    && (Information.Birthday == studObj.Information.Birthday)
+                    && (EducationForm == studObj.EducationForm) 
+                    && (Group == studObj.Group) 
+                    && ExamsEquals(Exams, studObj.Exams));
+        }
+
+        public static bool operator ==(Student ob1, Student ob2)
+        {
+            if ((object)ob1 == null || (object)ob2 == null)
+                {
+                    return false;
+                }
+            return ob1.Equals(ob2);
+        }
+
+        public static bool operator !=(Student ob1, Student ob2)
+        {
+            return !(ob1 == ob2);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 0;
+                hash = hash + (Object.ReferenceEquals(null, Information.Name)? 
+                        0 : Information.Name.GetHashCode());
+                hash = hash + (Object.ReferenceEquals(null, Information.Surname)? 
+                        0 : Information.Surname.GetHashCode());
+                hash = hash + (Object.ReferenceEquals(null, Information.Birthday)? 
+                        0 : Information.Birthday.GetHashCode());
+                hash = hash + (Object.ReferenceEquals(null, EducationForm)?
+                        0 : EducationForm.GetHashCode());
+                hash = hash + (Object.ReferenceEquals(null, Group)?
+                        0 : Group.GetHashCode());
+                hash = hash + (Object.ReferenceEquals(null, Exams)?
+                        0 : Exams.GetHashCode());
+                return hash;
+        }
+
+
 
     }
 }
