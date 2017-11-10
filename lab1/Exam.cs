@@ -1,10 +1,11 @@
 using System;
 
 namespace lab1{
-    public class Exam{
+    public class Exam : IDateAndCopy{
         public string Subject {get; set;}
         public int Mark {get; set;}
         public DateTime Time {get; set;}
+        public DateTime Date {get; set;}
         public Exam (string subject, int mark, DateTime time)
         {
             Subject = subject;
@@ -59,10 +60,12 @@ namespace lab1{
         public override int GetHashCode()
         {
             int hash = 0;
-            hash = hash + (Object.ReferenceEquals(null, Subject)? 0 : Subject.GetHashCode());
-            hash = hash + (Object.ReferenceEquals(null, Mark)? 0 : Mark.GetHashCode());
-            hash = hash + (Object.ReferenceEquals(null, Time)? 0 : Time.GetHashCode());
+            hash = hash + 7 * (Object.ReferenceEquals(null, Subject)? 0 : Subject.GetHashCode());
+            hash = hash + 7 * (Object.ReferenceEquals(null, Mark)? 0 : Mark.GetHashCode());
+            hash = hash + 7 * (Object.ReferenceEquals(null, Time)? 0 : Time.GetHashCode());
             return hash;
         }
+
+        public object DeepCopy() => (Exam) this.MemberwiseClone();
     }
 }

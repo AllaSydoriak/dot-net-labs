@@ -1,126 +1,156 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace lab1{
-    public class Student{
-        private Person _information;
+    public class Student : Person, IDateAndCopy{
         private Education _educationForm;
         private int _group;
-        private Exam[] _exams;
+        private ArrayList _exams;
+        private ArrayList _tests;
 
-        public Student (Person information, Education educationForm, int group, Exam[] exams)
+        public Student (String name, String surname, DateTime birthday, Education educationForm, 
+            int group, ArrayList exams, ArrayList tests) : base(name, surname, birthday)
         {
-            Information = information;
             EducationForm = educationForm;
             Group = group;
             Exams = exams;
+            Tests = tests;
         }
 
-        public Student ()
+        public Student () : base ()
         {
-            Information = new Person ();
             EducationForm = new Education ();
             Group = 1;
-            // Exam[] exams = { new Exam(), };
-            Exam[] exams = new Exam[4];
-            for (int i=0; i<4; i++)
-            {
-                exams[i] = new Exam();
-            }
-            Exams = exams;            
+            Exams = new ArrayList(); 
+            Tests = new ArrayList();        
         }
-        public Person Information
-        {
-            get => _information;
-            set{ _information = value; }
-        }
+
         public Education EducationForm
         {
             get => _educationForm;
-            set{ _educationForm = value; }
+            set => _educationForm = value; 
         }
-        public int Group{
+        public int Group
+        {
             get => _group;
-            set{  _group = value; }
+            set =>  _group = value; 
         }
-        public Exam[] Exams{
+
+        public int GroupValue
+        {
+            get => _group;
+            set {
+                if (value <= 100 || value > 699)
+                {
+                    throw new SystemException("Value should be less more 100 and less than 699");
+                }
+                _group = value;
+            }
+        }
+        public ArrayList Exams
+        {
             get => _exams;
-            set{ _exams = value; }
+            set => _exams = value; 
+        }
+
+        public ArrayList Tests
+        {
+            get => _tests;
+            set => _tests = value; 
         }
         
+        public Person PersonValue
+        {
+            get => new Person(Name, Surname, Birthday);
+
+            set
+            {
+                Name = value.Name;
+                Surname = value.Surname;
+                Birthday = value.Birthday;
+            }
+        }
+
         public double Avarage 
         {
             get 
             {
                 double avg = 0;
-                if (Exams == null || Exams.Length == 0) return 0;
+                if (Exams == null || Exams.Count == 0) return 0;
                 foreach (Exam item in Exams) {
                     avg += item.Mark;                
                 }
-                return avg / Exams.Length;
+                return avg / Exams.Count;
             }            
         }
 
         public bool this[Education e]
         {
-            get
-            {
-                return EducationForm == e;
-            }
+            get => EducationForm == e;
         }
 
         public void AddExams(params Exam[] newExams)
         {
             if (newExams == null || newExams.Length == 0) return;
-            Exam[] newList = new Exam[newExams.Length + (Exams == null ? 0: Exams.Length)];
 
-            int i = 0;
-            if (Exams != null)
+            foreach(Exam item in newExams)
             {
-            foreach(Exam item in Exams)
+                Exams.Add(item);
+            }
+
+        }
+
+        public void AddTests(params Test[] newTests)
+        {
+            if (newTests == null || newTests.Length == 0) return;
+
+            foreach(Test item in newTests)
             {
-                newList[i] = item;
-                i++;
+                Tests.Add(item);
             }
-            }
-           foreach(Exam item in newExams)
-            {
-                newList[i] = item;
-                i++;
-            }
-            Exams = newList;
+
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Surname: " + Information.Surname + ", " +
-                            "Name: " + Information.Name + ", " +
-                            "Birth date: " + Information.Birthday.ToShortDateString() + ", " +
+            sb.Append("Surname: " + Surname + ", " +
+                            "Name: " + Name + ", " +
+                            "Birth date: " + Birthday.ToShortDateString() + ", " +
                             "Education form: " + EducationForm + ", " +
                             "Group: " + Group + ", " +
                             "Exams: ");
-                foreach (Exam item in Exams)
-                {
-                    sb.Append(item.ToString() + " ");        
-                }
+            foreach (Exam item in Exams)
+            {
+                sb.Append(item.ToString() + "; ");        
+            }
+
+            sb.Append("Tests: ");
+            
+            foreach (Test item in Tests)
+            {
+                sb.Append(item.ToString() + " ");
+            }
+
             return sb.ToString();
         }
 
-        public virtual string ToShortString()
+        public override string ToShortString()
         {
-            return "Surname: " + Information.Surname + ", " +
-                    "Name: " + Information.Name + ", " +
-                    "Birth date: " + Information.Birthday + ", " +
+            return "Surname: " + Surname + ", " +
+                    "Name: " + Name + ", " +
+                    "Birth date: " + Birthday + ", " +
                     "Education form: " + EducationForm + ", " +
                     "Group: " + Group + ", " +
                     "Avarage mark: " + Avarage;
         }
 
-        public bool ExamsEquals(Exam[] arr1, Exam[] arr2)
+        public bool ExamsEquals(ArrayList arr1, ArrayList arr2)
         {
-            if (arr1.Length != arr2.Length) return false;
-            for(int i = 0; i < arr1.Length; i++)
+            if (arr1.Count != arr2.Count) return false;
+            for(int i = 0; i < arr1.Count; i++)
             {
                 if (arr1[i] != arr2[i]) return false;
             }
@@ -142,12 +172,13 @@ namespace lab1{
                 return false;
             }
 
-            else return( (Information.Name == studObj.Information.Name)
-                    && (Information.Surname == studObj.Information.Surname)
-                    && (Information.Birthday == studObj.Information.Birthday)
+            else return( (Name == studObj.Name)
+                    && (Surname == studObj.Surname)
+                    && (Birthday == studObj.Birthday)
                     && (EducationForm == studObj.EducationForm) 
                     && (Group == studObj.Group) 
-                    && ExamsEquals(Exams, studObj.Exams));
+                    && (Exams == studObj.Exams)
+                    && (Tests == studObj.Tests));
         }
 
         public static bool operator ==(Student ob1, Student ob2)
@@ -167,22 +198,63 @@ namespace lab1{
         public override int GetHashCode()
         {
             int hash = 0;
-                hash = hash + (Object.ReferenceEquals(null, Information.Name)? 
-                        0 : Information.Name.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Information.Surname)? 
-                        0 : Information.Surname.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Information.Birthday)? 
-                        0 : Information.Birthday.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, EducationForm)?
+                hash = hash + 7 * (Object.ReferenceEquals(null, Name)? 
+                        0 : Name.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Surname)? 
+                        0 : Surname.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Birthday)? 
+                        0 : Birthday.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, EducationForm)?
                         0 : EducationForm.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Group)?
+                hash = hash + 7 * (Object.ReferenceEquals(null, Group)?
                         0 : Group.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Exams)?
+                hash = hash + 7 * (Object.ReferenceEquals(null, Exams)?
                         0 : Exams.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Tests)?
+                        0 : Tests.GetHashCode());
                 return hash;
         }
 
+        public override object DeepCopy()
+        {
+            Student newStudent = (Student) this.MemberwiseClone();
 
+            ArrayList examList = new ArrayList();
+            ArrayList testList = new ArrayList();
+
+            foreach (Exam item in Exams)
+            {
+                examList.Add(item.DeepCopy());
+            }
+            foreach (Test item in Tests)
+            {
+                testList.Add(item.DeepCopy());
+            }
+
+            newStudent.Exams = examList;
+            newStudent.Tests = testList;
+
+            return newStudent;
+        }
+
+        public IEnumerable ExamsAndTests()
+        {
+            foreach(Exam item in Exams)
+            {
+                yield return item;
+            }
+            foreach(Test item in Tests)
+            {
+                yield return item;
+            }
+        }
+
+        public IEnumerable ExamsMoreThan(int mark){
+            foreach (Exam item in Exams)
+            {
+                if(item.Mark > mark) yield return item.Mark;
+            }
+        }
 
     }
 }

@@ -4,7 +4,6 @@
 namespace lab1
 {
     
-
     class Program
     {
         public static int сountRows(int mult)
@@ -25,12 +24,24 @@ namespace lab1
         static void Main(string[] args)
         {
 
-            Student ob = new Student();
             Student ob1 = new Student();
+            Student ob2 = new Student();
 
-            Console.WriteLine(ob==ob1);
-            
-            
+
+            Exam exam = new Exam();
+            Test test = new Test();
+        
+
+            ob1.AddExams(exam);
+            ob1.AddTests(test);
+
+            Person p2 = (Person)ob1.DeepCopy();
+
+            ob1.AddExams(new Exam());
+            Console.WriteLine(ob1.ToString());
+            Console.WriteLine("-------");
+            Console.WriteLine(p2.ToString());   
+
         }
     }
 }

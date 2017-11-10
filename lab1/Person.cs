@@ -1,10 +1,11 @@
 using System;
 
 namespace lab1{
-    public class Person : IEquatable<Person>{
-            private string _name;
-            private string _surname;
-            private DateTime _birthday;
+    public class Person : IDateAndCopy, IEquatable<Person>{
+            protected string _name;
+            protected string _surname;
+            protected DateTime _birthday;
+            public DateTime Date {get; set;}
             public Person(string firstName, string lastName, DateTime birth)
             {
                 Name = firstName;
@@ -20,27 +21,24 @@ namespace lab1{
             public string Name
             {
                 get => _name;
-                set{
-                    _name = value;
-                }
+                set => _name = value;
             }
 
             public string Surname
             {
                 get => _surname;
-                set{ _surname = value; }
+                set => _surname = value; 
             }
             public DateTime Birthday
             {
                 get => _birthday;
-                set{ _birthday = value; }
+                set => _birthday = value; 
             }
             public int birthYear
             {
                 get => _birthday.Year;
 
-                 set{ _birthday = new DateTime(value, _birthday.Month,_birthday.Day); }
-                
+                set => _birthday = new DateTime(value, _birthday.Month,_birthday.Day);               
             }
 
             public override string ToString()
@@ -102,11 +100,13 @@ namespace lab1{
             public override int GetHashCode()
             {
                 int hash = 0;
-                hash = hash + (Object.ReferenceEquals(null, Name)? 0 : Name.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Surname)? 0 : Surname.GetHashCode());
-                hash = hash + (Object.ReferenceEquals(null, Birthday)? 0 : Birthday.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Name)? 0 : Name.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Surname)? 0 : Surname.GetHashCode());
+                hash = hash + 7 * (Object.ReferenceEquals(null, Birthday)? 0 : Birthday.GetHashCode());
                 return hash;
             }
+
+            public virtual object DeepCopy() => (Person) this.MemberwiseClone();
 
         }
 }
