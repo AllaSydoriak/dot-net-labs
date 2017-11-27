@@ -1,5 +1,6 @@
 using System;
 
-namespace lab1{
+namespace lab1
+{
     public enum Education{ Master, Bachelor, SecondEducation};    
 }

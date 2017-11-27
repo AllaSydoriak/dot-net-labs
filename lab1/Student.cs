@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace lab1{
-    public class Student : Person, IDateAndCopy{
+namespace lab1
+{
+    public class Student : Person, IDateAndCopy
+    {
         private Education _educationForm;
         private int _group;
-        private ArrayList _exams;
-        private ArrayList _tests;
+        private List<Exam> _exams;
+        private List<Test> _tests;
 
         public Student (String name, String surname, DateTime birthday, Education educationForm, 
-            int group, ArrayList exams, ArrayList tests) : base(name, surname, birthday)
+            int group, List<Exam> exams, List<Test> tests) : base(name, surname, birthday)
         {
             EducationForm = educationForm;
             Group = group;
@@ -23,8 +25,8 @@ namespace lab1{
         {
             EducationForm = new Education ();
             Group = 1;
-            Exams = new ArrayList(); 
-            Tests = new ArrayList();        
+            Exams = new List<Exam>(); 
+            Tests = new List<Test>();        
         }
 
         public Education EducationForm
@@ -49,13 +51,13 @@ namespace lab1{
                 _group = value;
             }
         }
-        public ArrayList Exams
+        public List<Exam> Exams
         {
             get => _exams;
             set => _exams = value; 
         }
 
-        public ArrayList Tests
+        public List<Test> Tests
         {
             get => _tests;
             set => _tests = value; 
@@ -219,16 +221,16 @@ namespace lab1{
         {
             Student newStudent = (Student) this.MemberwiseClone();
 
-            ArrayList examList = new ArrayList();
-            ArrayList testList = new ArrayList();
+            List<Exam> examList = new List<Exam>();
+            List<Test> testList = new List<Test>();
 
             foreach (Exam item in Exams)
             {
-                examList.Add(item.DeepCopy());
+                examList.Add((Exam)item.DeepCopy());
             }
             foreach (Test item in Tests)
             {
-                testList.Add(item.DeepCopy());
+                testList.Add((Test)item.DeepCopy());
             }
 
             newStudent.Exams = examList;

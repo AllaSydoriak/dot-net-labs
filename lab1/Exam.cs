@@ -1,7 +1,9 @@
 using System;
 
-namespace lab1{
-    public class Exam : IDateAndCopy{
+namespace lab1
+{
+    public class Exam : IDateAndCopy
+    {
         public string Subject {get; set;}
         public int Mark {get; set;}
         public DateTime Time {get; set;}

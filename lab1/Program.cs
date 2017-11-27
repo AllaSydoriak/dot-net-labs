@@ -23,25 +23,29 @@ namespace lab1
 
         static void Main(string[] args)
         {
+            StudentCollection collection = new StudentCollection();
+            collection.AddDefaults();
+            Console.WriteLine(collection.ToString());
 
-            Student ob1 = new Student();
-            Student ob2 = new Student();
+            Console.WriteLine("Sorted by surname: \n");
+            collection.SortBySurname();
+            Console.WriteLine(collection.ToString());
 
+            Console.WriteLine("Sorted by birthday: \n");
+            collection.SortByBirthday();
+            Console.WriteLine(collection.ToString());
 
-            Exam exam = new Exam();
-            Test test = new Test();
-        
+            Console.WriteLine("Sorted by avarage mark: \n");
+            collection.SortByAvgMark();
+            Console.WriteLine(collection.ToShortString());
 
-            ob1.AddExams(exam);
-            ob1.AddTests(test);
+            Console.WriteLine("Max avarage mark: \n");
+            Console.WriteLine(collection.GetMaxAvgMark);
 
-            Person p2 = (Person)ob1.DeepCopy();
+            Console.WriteLine("Education form Master: \n");
+            Console.WriteLine(collection.GetMaster);
 
-            ob1.AddExams(new Exam());
-            Console.WriteLine(ob1.ToString());
-            Console.WriteLine("-------");
-            Console.WriteLine(p2.ToString());   
-
+            
         }
     }
 }

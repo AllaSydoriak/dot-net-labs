@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 
-namespace lab1{
-    public class Person : IDateAndCopy, IEquatable<Person>{
+namespace lab1
+{
+    public class Person : IDateAndCopy, IEquatable<Person>, IComparable, IComparer<Person>
+    {
             protected string _name;
             protected string _surname;
             protected DateTime _birthday;
@@ -82,7 +85,7 @@ namespace lab1{
                 
             }
 
-        public static bool operator ==(Person ob1, Person ob2)
+            public static bool operator ==(Person ob1, Person ob2)
             {
                 if ((object)ob1 == null || (object)ob2 == null)
                 {
@@ -107,6 +110,28 @@ namespace lab1{
             }
 
             public virtual object DeepCopy() => (Person) this.MemberwiseClone();
+
+            public int CompareTo(object obj)
+            {
+                if (obj == null)
+                    return 1;
+
+                Person person = obj as Person;
+
+                if (person != null)
+                {
+                    return this.Surname.CompareTo(person.Surname);
+                }
+                else
+                {
+                    throw new ArgumentException("Object is not a Person");
+                }
+            }
+
+            public int Compare(Person obj1, Person obj2)
+            {
+                return obj1.Birthday.CompareTo(obj2.Birthday);
+            }
 
         }
 }

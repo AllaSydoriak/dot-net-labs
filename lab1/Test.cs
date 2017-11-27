@@ -1,7 +1,9 @@
 using System;
 
-namespace lab1{
-    public class Test{
+namespace lab1
+{
+    public class Test
+    {
         public string Subject {get; set;}
         public bool Result {get; set;}
 
