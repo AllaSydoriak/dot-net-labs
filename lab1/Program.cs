@@ -45,7 +45,10 @@ namespace lab1
             Console.WriteLine("Education form Master: \n");
             Console.WriteLine(collection.GetMaster);
 
-            
+            TestCollections test = new TestCollections();
+            test.TestCollection(15000);
+            test.GetTime();
+
         }
     }
 }

@@ -6,20 +6,18 @@ namespace lab1
 
     class TestCollections
     {
-        private List<Person> _personList = new List<Person>();
-        private List<string> _stringList = new List<string>();
-        private Dictionary<Person, Student> _personStudDictionary = new Dictionary<Person, Student>();
-        private Dictionary<string, Student> _stringStudDictionary = new Dictionary<string, Student>();
-                        
-        public static Student GenerateCollection(int n)
+        private List<Person> _personList;
+        private List<string> _stringList;
+        private Dictionary<Person, Student> _personStudDictionary;
+        private Dictionary<string, Student> _stringStudDictionary;
+
+        public TestCollections()
         {
-            Student student = new Student("Ivan" + n.ToString(), "Ivanov" + n.ToString(), new DateTime(2000 + n, 01 , 01), (Education)(n < 3 ? n : n % 3), 400 + n, new List<Exam>(), new List<Test>());
-
-            student.AddExams(new Exam());   
-            student.AddTests(new Test());
-
-            return student;
-        }
+            PersonList = new List<Person>();
+            StringList = new List<string>();
+            PersonStudDictionary = new Dictionary<Person, Student>();
+            StringStudDictionary = new Dictionary<string, Student>();
+        }         
 
         public List<Person> PersonList
         {
@@ -45,7 +43,17 @@ namespace lab1
             set => _stringStudDictionary = value;
         }
 
-        public TestCollections(int n)
+        public static Student GenerateCollection(int n)
+        {
+            Student student = new Student("Ivan" + n.ToString(), "Ivanov" + n.ToString(), new DateTime(1990, 01 , 01), (Education)(n < 3 ? n : n % 3), 400 + n, new List<Exam>(), new List<Test>());
+
+            student.AddExams(new Exam());   
+            student.AddTests(new Test());
+
+            return student;
+        }
+
+        public void TestCollection(int n)
         {
             for (int i = 0; i < n; i++)
             {
@@ -63,102 +71,87 @@ namespace lab1
         {
             Console.WriteLine("\nFirst element:\n");
 
-            Student studentToFind = GenerateCollection(0);
-            string stringToFind = studentToFind.ToString();
+            Student findStudent = GenerateCollection(0);
+            string findString = findStudent.ToString();
             
             long startTime = Environment.TickCount;
-            PersonList.Contains(studentToFind);
+            PersonList.Contains(findStudent);
             Console.WriteLine("List<Person>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            StringList.Contains(stringToFind);
+            StringList.Contains(findString);
             Console.WriteLine("List<string>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsKey(studentToFind);
+            PersonStudDictionary.ContainsKey(findStudent);
             Console.WriteLine("Dict<Person,Student>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            StringStudDictionary.ContainsKey(stringToFind);
+            StringStudDictionary.ContainsKey(findString);
             Console.WriteLine("Dict<string,Student>: " + (Environment.TickCount - startTime));
 
 
             Console.WriteLine("\n\nMiddle element:\n");
 
-            studentToFind = GenerateCollection(PersonList.Count / 2);
+            findStudent = GenerateCollection(PersonList.Count / 2);
 
             startTime = Environment.TickCount;
-            PersonList.Contains(studentToFind);
+            PersonList.Contains(findStudent);
             Console.WriteLine("List<Person>: " + (Environment.TickCount - startTime));
 
-            stringToFind = studentToFind.ToString();
+            findString = findStudent.ToString();
             startTime = Environment.TickCount;
-            StringList.Contains(stringToFind);
+            StringList.Contains(findString);
             Console.WriteLine("List<string>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsKey(studentToFind);
+            PersonStudDictionary.ContainsKey(findStudent);
             Console.WriteLine("Dict<Person,Student>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            StringStudDictionary.ContainsKey(stringToFind);
+            StringStudDictionary.ContainsKey(findString);
             Console.WriteLine("Dict<string,Student>: " + (Environment.TickCount - startTime));
-
-            startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsValue(studentToFind);
-            Console.WriteLine("value at Dict<Person,Student>: " + (Environment.TickCount - startTime));
-
 
             Console.WriteLine("\n\nLast element:\n");
-            studentToFind = GenerateCollection(PersonList.Count - 1);
+            findStudent = GenerateCollection(PersonList.Count - 1);
 
             startTime = Environment.TickCount;
-            PersonList.Contains(studentToFind);
+            PersonList.Contains(findStudent);
             Console.WriteLine("List<Person>: " + (Environment.TickCount - startTime));
 
-            stringToFind = studentToFind.ToString();
+            findString = findStudent.ToString();
             startTime = Environment.TickCount;
-            StringList.Contains(stringToFind);
+            StringList.Contains(findString);
             Console.WriteLine("List<string>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsKey(studentToFind);
+            PersonStudDictionary.ContainsKey(findStudent);
             Console.WriteLine("Dict<Person,Student>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            StringStudDictionary.ContainsKey(stringToFind);
+            StringStudDictionary.ContainsKey(findString);
             Console.WriteLine("Dict<string,Student>: " + (Environment.TickCount - startTime));
-
-            startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsValue(studentToFind);
-            Console.WriteLine("value at Dict<Person,Student>: " + (Environment.TickCount - startTime));
-
 
             Console.WriteLine("\n\nNot existing element:\n");
-            studentToFind = GenerateCollection(PersonList.Count);
+            findStudent = GenerateCollection(PersonList.Count);
 
             startTime = Environment.TickCount;
-            PersonList.Contains(studentToFind);
+            PersonList.Contains(findStudent);
             Console.WriteLine("List<Person>: " + (Environment.TickCount - startTime));
 
-            stringToFind = studentToFind.ToString();
+            findString = findStudent.ToString();
             startTime = Environment.TickCount;
-            StringList.Contains(stringToFind);
+            StringList.Contains(findString);
             Console.WriteLine("List<string>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsKey(studentToFind);
+            PersonStudDictionary.ContainsKey(findStudent);
             Console.WriteLine("Dict<Person,Student>: " + (Environment.TickCount - startTime));
 
             startTime = Environment.TickCount;
-            StringStudDictionary.ContainsKey(stringToFind);
+            StringStudDictionary.ContainsKey(findString);
             Console.WriteLine("Dict<string,Student>: " + (Environment.TickCount - startTime));
-
-            startTime = Environment.TickCount;
-            PersonStudDictionary.ContainsValue(studentToFind);
-            Console.WriteLine("value at Dict<Person,Student>: " + (Environment.TickCount - startTime));
-
-            Console.ReadKey();            
+          
         }
     }
     
