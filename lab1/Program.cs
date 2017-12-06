@@ -3,51 +3,39 @@
 
 namespace lab1
 {
-    
     class Program
     {
-        public static int сountRows(int mult)
-        {
-            int rows = 0;
-            int countInRow = 0;
-            int sum = 0;
-
-            while (sum < mult)
-            {
-                countInRow += 1;
-                sum += countInRow;
-                rows++;
-            }
-            return rows;
-        }
-
         static void Main(string[] args)
         {
-            StudentCollection collection = new StudentCollection();
-            collection.AddDefaults();
-            Console.WriteLine(collection.ToString());
+            StudentCollection sc1 = new StudentCollection("Student collection #1");
+            StudentCollection sc2 = new StudentCollection("Student collection #2");
+            
+            Journal j1 = new Journal();
+            Journal j2 = new Journal();
 
-            Console.WriteLine("Sorted by surname: \n");
-            collection.SortBySurname();
-            Console.WriteLine(collection.ToString());
+            sc1.StudentCountChanged += j1.OnStudentCountChanged;
+            sc1.StudentReferenceChanged += j1.OnStudentReferenceChanged;
 
-            Console.WriteLine("Sorted by birthday: \n");
-            collection.SortByBirthday();
-            Console.WriteLine(collection.ToString());
+            sc1.StudentCountChanged += j2.OnStudentCountChanged;
+            sc2.StudentCountChanged += j2.OnStudentCountChanged;
+            sc1.StudentReferenceChanged += j2.OnStudentReferenceChanged;
+            sc2.StudentReferenceChanged += j2.OnStudentReferenceChanged;
 
-            Console.WriteLine("Sorted by avarage mark: \n");
-            collection.SortByAvgMark();
-            Console.WriteLine(collection.ToShortString());
+            sc1.AddDefaults();           
+            sc2.AddDefaults();
 
-            Console.WriteLine("Max avarage mark: \n");
-            Console.WriteLine(collection.GetMaxAvgMark);
+            sc1.Remove(2);            
+            sc2.Remove(1);
 
-            Console.WriteLine("Education form Master: \n");
-            Console.WriteLine(collection.GetMaster);
 
-            TestCollections test = new TestCollections();
-            test.TestCollection(15000);
-            test.GetTime();
+            Student student = new Student();
+            sc1[1] = student;
+            student = new Student();
+            sc2[0] = student;
+
+
+            Console.WriteLine(j1 + "\n\n");
+            Console.WriteLine(j2 + "\n\n");
 
         }
     }

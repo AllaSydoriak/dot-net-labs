@@ -12,9 +12,15 @@ namespace lab1
     class StudentCollection : StudentComparer
     {
         private List<Student> _studentList;
+        public string CollectionName { get; set; }
 
-        public StudentCollection(){
+        public delegate void StudentListHandler(object source, StudentListHandlerEventArgs args);
+        public event StudentListHandler StudentCountChanged;
+        public event StudentListHandler StudentReferenceChanged;
+
+        public StudentCollection(string collectionName){
             StudentList = new List<Student>();
+            CollectionName = collectionName;
         }
 
         public List<Student> StudentList
@@ -71,6 +77,7 @@ namespace lab1
             for (int i = 0; i < students.Length; i++)
             {
                  StudentList.Add(students[i]);
+                 StudentCountChanged?.Invoke(this, new StudentListHandlerEventArgs(CollectionName, "Added new student", StudentList[i]));
             }
 
         }
@@ -143,6 +150,30 @@ namespace lab1
             }
 
             return new List<Student>();
+        }
+
+        public bool Remove(int j)
+        {
+            if (StudentList[j] == null)
+                return false;
+
+            if (StudentCountChanged != null)
+            {
+                StudentCountChanged?.Invoke(this, new StudentListHandlerEventArgs(CollectionName, "Removed item", StudentList[j]));
+            }
+
+            StudentList.RemoveAt(j);
+            return true;
+        }
+
+        public Student this[int i]
+        {
+            get => StudentList[i];
+            set
+            {
+                StudentList[i] = value;
+                StudentReferenceChanged?.Invoke(this, new StudentListHandlerEventArgs(CollectionName, "Item reference changed", StudentList[i]));
+            }
         }
 
     }

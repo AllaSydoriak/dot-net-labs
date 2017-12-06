@@ -1,3 +1,18 @@
+        public static int сountRows(int mult)
+        {
+            int rows = 0;
+            int countInRow = 0;
+            int sum = 0;
+
+            while (sum < mult)
+            {
+                countInRow += 1;
+                sum += countInRow;
+                rows++;
+            }
+            return rows;
+        }
+            
             // Console.WriteLine("Input the number of rows and columns. Separate them with one of the separators: ' ', ',', '.' ");
             // string userLine = Console.ReadLine();
             // string[] result = userLine.Split(new Char [] {' ', ',', '.' });
