@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+
 
 namespace lab1
 {
+    [DataContract]
     public class Person : IDateAndCopy, IEquatable<Person>, IComparable, IComparer<Person>
     {
-            protected string _name;
-            protected string _surname;
-            protected DateTime _birthday;
+            [DataMember] protected string _name;
+            [DataMember] protected string _surname;
+            [DataMember] protected DateTime _birthday;
             public DateTime Date {get; set;}
             public Person(string firstName, string lastName, DateTime birth)
             {

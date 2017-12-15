@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
 
 namespace lab1
 {
+    [DataContract]
     public class Student : Person, IDateAndCopy
     {
-        private Education _educationForm;
-        private int _group;
-        private List<Exam> _exams;
-        private List<Test> _tests;
+        [DataMember] private Education _educationForm;
+        [DataMember] private int _group;
+        [DataMember] private List<Exam> _exams;
+        [DataMember] private List<Test> _tests;
 
         public Student (String name, String surname, DateTime birthday, Education educationForm, 
             int group, List<Exam> exams, List<Test> tests) : base(name, surname, birthday)
@@ -232,11 +236,26 @@ namespace lab1
             {
                 testList.Add((Test)item.DeepCopy());
             }
-
             newStudent.Exams = examList;
             newStudent.Tests = testList;
 
-            return newStudent;
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Student));
+            MemoryStream memoryStream = new MemoryStream();
+            try
+            {
+                jsonSerializer.WriteObject(memoryStream, newStudent);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return (Student)jsonSerializer.ReadObject(memoryStream);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return null;
+            }            
+            finally
+            {
+                memoryStream.Close();
+            }
         }
 
         public IEnumerable ExamsAndTests()
@@ -258,5 +277,107 @@ namespace lab1
             }
         }
 
+        public bool Save(string filename)
+        {
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Student));
+            
+            if (File.Exists(@filename))
+            {
+                File.Delete(@filename);
+            }
+
+            FileStream buffer = File.Create(@filename); 
+
+            try
+            {
+                jsonSerializer.WriteObject(buffer, this);
+                Console.WriteLine("File saved");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return false;
+            }
+            finally
+            {
+                buffer.Close(); 
+            }
+            return true;
+        }
+
+        public bool Load(string filename)
+        {
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Student));
+            FileStream buffer = File.OpenRead(@filename);
+            try
+            {
+                Student student = jsonSerializer.ReadObject(buffer) as Student;
+                if(student != null)
+                {
+                    this.Name = student.Name;
+                    this.Surname = student.Surname;
+                    this.Birthday = student.Birthday;
+                    this.EducationForm = student.EducationForm;
+                    this.Group = student.Group;
+                    this.Exams = student.Exams;
+                    this.Tests = student.Tests;
+                    Console.WriteLine("Object saved"); 
+                }         
+                return true;                        
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error: {e}");
+                return false;
+            }
+            finally
+            {
+                buffer.Close(); 
+            }
+        }
+
+        public static bool Save(string fileName, Student student)
+        {
+            return student.Save(fileName);
+        }
+
+        public static bool Load(string fileName, Student student)
+        {
+            return student.Load(fileName);
+        }
+        public bool AddExamFromConsole()
+        {
+            Console.WriteLine("Input information about exam");
+            Console.WriteLine("Separate it with ',' \n");
+            Console.WriteLine("Information for exam: name, mark and date\n");
+            
+            string[] result = new string[]{};
+
+            string userLine = Console.ReadLine();
+            try
+            {
+                result = userLine.Split(',');
+                
+                if(result.Length != 3)
+                    throw new Exception("You should input name and mark using delimiters");
+                
+                string name = result[0];
+                int mark = Convert.ToInt32(result[1]);
+                DateTime date = DateTime.Parse(result[2]);
+                
+                Exam exam = new Exam(name, mark, date);
+                Exams.Add(exam);
+                Console.WriteLine("Test succesfuly added!");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Something going wrong");                
+                Console.WriteLine($"Errors: {e}");
+                return false;
+            }
+            
+            return true;
+        }
     }
 }
+

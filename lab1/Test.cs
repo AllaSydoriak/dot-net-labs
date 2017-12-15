@@ -1,11 +1,13 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace lab1
 {
+    [DataContract]
     public class Test
     {
-        public string Subject {get; set;}
-        public bool Result {get; set;}
+        [DataMember] public string Subject {get; set;}
+        [DataMember] public bool Result {get; set;}
 
         public Test(string subject, bool result )
         {

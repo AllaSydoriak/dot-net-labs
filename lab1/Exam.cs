@@ -1,12 +1,14 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace lab1
 {
+    [DataContract]
     public class Exam : IDateAndCopy
     {
-        public string Subject {get; set;}
-        public int Mark {get; set;}
-        public DateTime Time {get; set;}
+        [DataMember] public string Subject {get; set;}
+        [DataMember] public int Mark {get; set;}
+        [DataMember] public DateTime Time {get; set;}
         public DateTime Date {get; set;}
         public Exam (string subject, int mark, DateTime time)
         {
@@ -18,7 +20,7 @@ namespace lab1
         {
             Subject = "Math";
             Mark = 5;
-            Time = new DateTime(2017, 10, 31, 0, 0, 0);
+            Time = new DateTime(2017, 10, 30, 0, 0, 0);
         }
         public override string ToString()
         {
